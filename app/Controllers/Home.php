@@ -23,7 +23,6 @@ class Home extends BaseController
 
     public function store()
     {
-
         // condifitioinal
         $check_businnes = (!$this->request->getVar('businnes_entity') ? "0" : "1");
         $individual = (!$this->request->getVar('individual') ? "0" : "1");
@@ -40,6 +39,13 @@ class Home extends BaseController
         ]);
 
         return redirect()->to('/');
+    }
+
+    public function edit($id)
+    {
+        $data['ownerships'] = $this->ownerships->find($id);
+        
+        echo json_encode($data);
     }
 
     public function destroy($id = null)

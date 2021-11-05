@@ -22,29 +22,29 @@
 						<h5>Master Kepemilikan</h5>
 						<div class="card">
 							<div class="card-header">
-								Tambah Pemilikan
+								<i class="bi bi-plus"></i>Tambah Pemilikan
 							</div>
-							<form action="<?= base_url("ownership/store")?>" method="POST" autocomplete="off">
+							<form action="<?= base_url("ownership/store")?>" method="POST" autocomplete="off" id="formAction">
 							<?= csrf_field(); ?>
 								<div class="card-body">
 									<div class="form-group">
 										<label for="">Nama Kepemilikan *</label>
-										<input type="name" class="form-control" id="" name="name" aria-describedby="">
+										<input type="name" class="form-control" id="name" name="name" aria-describedby="" value="">
 									</div>
 									<div class="form-group">
 										<label for="">Jenis Kepemilikan *</label>
 										<div class="form-check">
 											<div class="custom-control custom-checkbox">
 												<input type="checkbox" name="businnes_entity" class="custom-control-input" id="customCheck1">
-												<label class="custom-control-label" for="customCheck1">Badan Usaha</label>
+												<label class="custom-control-label" for="customCheck1" value="" >Badan Usaha</label>
 											</div>
 											<div class="custom-control custom-checkbox">
 												<input type="checkbox" class="custom-control-input" name="individual" id="customCheck2">
-												<label class="custom-control-label" for="customCheck2">Perorangan</label>
+												<label class="custom-control-label" for="customCheck2" value="">Perorangan</label>
 											</div>
 											<div class="custom-control custom-checkbox">
 												<input type="checkbox" class="custom-control-input" id="customCheck3" name="foundation">
-												<label class="custom-control-label" for="customCheck3">Yayasan</label>
+												<label class="custom-control-label" for="customCheck3" value="">Yayasan</label>
 											</div>
 										</div>
 									</div>
@@ -52,7 +52,7 @@
 								<div class="card-footer">
 									<div class="d-flex justify-content-end">
 										<button type="reset" class="btn btn-danger mr-3"><i class="bi bi-arrow-repeat"></i> Reset</button>
-										<button type="submit" class="btn btn-primary"> <i class="bi bi-save"></i> Save</button>
+										<button type="submit" class="btn btn-primary" id="ButtonAction"> <i class="bi bi-save"></i> Save</button>
 									</div>
 								</div>
 							</form>
@@ -91,8 +91,10 @@
 													<td><i class="bi bi-<?= ($key['individual'] == 0) ? "x" : "check" ;?>"></td>	
 													<td><i class="bi bi-<?= ($key['foundation'] == 0) ? "x" : "check" ;?>"></td>	
 													<td>
-														<a href="" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-														<a href="<?= base_url("ownership/destroy/$key[id]")?>"  onclick="return confirm('Are you sure want to delete the data?')" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+														<a href="#" class="btn btn-warning btn-sm" onclick="editButton(<?=$key['id']?>)">
+															<i class="bi bi-pencil-square"></i>
+														</a>
+														<a href="<?= base_url("ownership/destroy/$key[id]")?>"onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
 													</td>	
 												</tr>
 											<?php
@@ -107,8 +109,45 @@
 	</div>
 
    	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-   	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 
+	<script>
+		function editButton(id) {
+			
+			var urlJSON =  "<?= site_url('ownership/edit/')?>"+id
+
+			var urlForm = "<?= site_url('ownership/update')?>"
+			$('#formAction').attr('action', urlForm);
+			
+			$.ajax ({
+				url: urlJSON,
+				type: 'GET',
+				dataType: "JSON",
+				success: function(data) {
+					
+					$('#name').val(data.ownerships.name)
+
+					if (parseInt(data.ownerships.businnes_entity) === 1)  {
+						$('#customCheck1').attr("checked", true)	
+					}
+
+					if (parseInt(data.ownerships.individual) === 1)  {
+						$('#customCheck2').attr("checked", true)	
+					}
+
+					if (parseInt(data.ownerships.foundation) === 1)  {
+						$('#customCheck3').attr("checked", true)	
+					}
+					
+				},
+				error: function(err) {
+					console.log(err);
+				}
+
+			})
+			
+		}
+	</script>
 </body>
 </html>
