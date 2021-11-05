@@ -34,10 +34,12 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
-$routes->add('ownership/store', 'Home::store');
-$routes->get('ownership/edit/(:num)', 'Home::edit/$1');
-$routes->get('ownership/destroy/(:num)', 'Home::destroy/$1');
 
+$routes->group('ownership', function($routes){
+    $routes->add('store', 'Home::store');
+    $routes->get('edit/(:num)', 'Home::edit/$1');
+    $routes->get('destroy/(:num)', 'Home::destroy/$1');
+});
 
 /*
  * --------------------------------------------------------------------
