@@ -29,7 +29,13 @@
 								<div class="card-body">
 									<div class="form-group">
 										<label for="">Nama Kepemilikan *</label>
-										<input type="name" class="form-control" id="name" name="name" aria-describedby="" value="">
+										<input type="name" 
+												class="form-control <?= ($validation->hasError('name')) ? 'is-invalid' : ''; ?>" 
+												id="name" 
+												name="name" aria-describedby="" value="<?= old('name')?>">
+										<div class="invalid-feedback">
+											<?= $validation->getError('name');?>
+										</div>
 									</div>
 									<div class="form-group">
 										<label for="">Jenis Kepemilikan *</label>
