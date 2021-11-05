@@ -38,6 +38,7 @@ $routes->get('/', 'Home::index');
 $routes->group('ownership', function($routes){
     $routes->add('store', 'Home::store');
     $routes->get('edit/(:num)', 'Home::edit/$1');
+    $routes->add('update/(:num)', 'Home::update/$1');
     $routes->get('destroy/(:num)', 'Home::destroy/$1');
 });
 

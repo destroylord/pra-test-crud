@@ -48,6 +48,25 @@ class Home extends BaseController
         echo json_encode($data);
     }
 
+    public function update($id = null)
+    {
+        // condifitioinal
+        $check_businnes = (!$this->request->getVar('businnes_entity') ? "0" : "1");
+        $individual = (!$this->request->getVar('individual') ? "0" : "1");
+        $foundation = (!$this->request->getVar('foundation') ? "0" : "1");
+
+       $this->ownerships->update($id, [
+            'name' => $this->request->getVar('name'),
+            'businnes_entity' => $check_businnes,
+            'individual' => $individual,
+            'foundation' => $foundation,
+            'created_at' => Time::now()
+       ]);
+
+       return redirect()->to('/');
+          
+    }
+
     public function destroy($id = null)
     {
         $this->ownerships->where('id', $id)->delete($id);

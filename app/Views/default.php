@@ -117,7 +117,7 @@
 			
 			var urlJSON =  "<?= site_url('ownership/edit/')?>"+id
 
-			var urlForm = "<?= site_url('ownership/update')?>"
+			var urlForm = "<?= site_url('ownership/update/')?>"+id
 			$('#formAction').attr('action', urlForm);
 			
 			$.ajax ({
