@@ -67,7 +67,14 @@
 					<div class="col-md-8">
 							<div class="row">
 								<div class="col-md-9">
-									<input type="search" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+									<form action="<?= base_url('/')?>" method="POST">
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" placeholder="Recipient's username" name="keyword">
+										<div class="input-group-append">
+											<button class="btn btn-outline-secondary" name="submit" type="button" id="button-addon2">Cari</button>
+										</div>
+										</div>
+									</form>
 								</div>
 							</div>
 
@@ -108,6 +115,11 @@
 											?>
 									</tbody>
 							</table>
+
+							<!-- paginate -->
+							<div class="mt-4">
+								<?= $pager->links() ?>
+							</div>
 					</div>
 				</div>
 			</div>

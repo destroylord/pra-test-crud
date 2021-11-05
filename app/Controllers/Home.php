@@ -19,8 +19,26 @@ class Home extends BaseController
 
     public function index()
     {
-        $data['ownershipses']   = $this->ownerships->findAll();
-        $data['validation']     = $this->validation;
+        $searchData = $this->request->getVar('keyword');
+         
+        $search = "";
+
+        // get data 
+        $users = $this->ownerships;
+
+        if ($searchData) {
+            $user = $users->search($searchData);
+        }else {
+            $user = $users;
+        }
+        
+        $data= [
+            'ownershipses'  => $user->paginate('4'),
+            'validation'    => $this->validation,
+            'pager'         => $users->pager,
+			'search'        => $search
+        ];
+
         return view('default', $data);
     }
 
