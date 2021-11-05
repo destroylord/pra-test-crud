@@ -22,9 +22,9 @@
 						<h5>Master Kepemilikan</h5>
 						<div class="card">
 							<div class="card-header">
-								<i class="bi bi-plus"></i>Tambah Pemilikan
+								<i class="bi bi-plus-lg btn btn-primary mr-3" onclick="ChangeFormStore()"></i>Tambah Pemilikan
 							</div>
-							<form action="<?= base_url("ownership/store")?>" method="POST" autocomplete="off" id="formAction">
+							<form action="<?= base_url("ownership/store")?>" method="POST" autocomplete="off" id="formAction" class="form">
 							<?= csrf_field(); ?>
 								<div class="card-body">
 									<div class="form-group">
@@ -113,13 +113,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 
 	<script>
+
+
+		function ChangeFormStore() {
+			var urlStore = "<?=base_url("ownership/store")?>"
+				$('.form').attr('action', urlStore);
+
+				$('#name').val("");
+				$('#customCheck1').attr("checked", false)
+				$('#customCheck2').attr("checked", false)
+				$('#customCheck3').attr("checked", false)
+		}
+			
 		function editButton(id) {
 			
 			var urlJSON =  "<?= site_url('ownership/edit/')?>"+id
 
 			var urlForm = "<?= site_url('ownership/update/')?>"+id
 			$('#formAction').attr('action', urlForm);
-			
+		
 			$.ajax ({
 				url: urlJSON,
 				type: 'GET',
@@ -128,16 +140,22 @@
 					
 					$('#name').val(data.ownerships.name)
 
-					if (parseInt(data.ownerships.businnes_entity) === 1)  {
+					if (parseInt(data.ownerships.businnes_entity) == 1)  {
 						$('#customCheck1').attr("checked", true)	
+					}else {
+						$('#customCheck1').attr("checked", false)	
 					}
 
-					if (parseInt(data.ownerships.individual) === 1)  {
+					if (parseInt(data.ownerships.individual) == 1)  {
 						$('#customCheck2').attr("checked", true)	
+					}else {
+						$('#customCheck2').attr("checked", false)	
 					}
 
-					if (parseInt(data.ownerships.foundation) === 1)  {
+					if (parseInt(data.ownerships.foundation) == 1)  {
 						$('#customCheck3').attr("checked", true)	
+					}else {
+						$('#customCheck3').attr("checked", false)	
 					}
 					
 				},
@@ -148,6 +166,7 @@
 			})
 			
 		}
+
 	</script>
 </body>
 </html>
