@@ -50,8 +50,6 @@ class CreateOwnershipTable extends Migration
 
     public function down()
     {
-        //
-
         $this->forge->dropTable('ownership');
     }
 }
